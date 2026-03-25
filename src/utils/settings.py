@@ -5,5 +5,5 @@ class Settings(BaseSettings):
 
     DB_CONNECTION:str
 
-settings = Settings()
-
+    
+Settings = Settings()
