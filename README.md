@@ -27,4 +27,14 @@ task_management_app/
         ├── db.py
         ├── constants.py
         └── helpers.py
-```"# Task_management" 
+```
+"# Task_management" 
+
+# Function in API
+
+- See Task 
+- Fetch Task 
+- Update Task 
+- Delete Task 
+
+
