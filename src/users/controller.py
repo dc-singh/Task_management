@@ -2,9 +2,10 @@ from src.users.dtos import UserSchema
 from sqlalchemy.orm import Session
 from src.users.dtos import UserSchema, loginSchema
 from src.users.models import UserModel
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Request
 from pwdlib import PasswordHash
 import jwt
+from jwt import InvalidTokenError
 from src.utils.settings import Settings
 from datetime import datetime, timedelta, timezone
 
@@ -54,6 +55,31 @@ def login_user(body:loginSchema, db:Session):
 
     token = jwt.encode({"_id":user.id, "exp":exp_time}, Settings.SECRET_KEY, Settings.ALGORITHM)
     return {"token":token}
+
+
+def is_authenticated(request: Request, db:Session):
+    try:
+        token = request.headers.get("authorization")
+        if not token:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="You are unauthorised")
+        token = token.split(" ")[-1]
+        data = jwt.decode(token, Settings.SECRET_KEY, Settings.ALGORITHM)
+        
+        user_id = data.get("_id")
+        exp_time = data.get("exp")
+        curr_time = datetime.now().timestamp()
+
+        if curr_time > exp_time:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail = "You are unauthorised")
+        
+        user = db.query(UserModel).filter(UserModel.id == user_id).first()
+        if not user:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail = "You are unauthorised")
+
+        return user
+    except InvalidTokenError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="You are unauthorised")
+
 
 
 
