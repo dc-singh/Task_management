@@ -9,6 +9,7 @@ from jwt import InvalidTokenError
 from src.utils.settings import Settings
 from datetime import datetime, timedelta, timezone
 
+
 password_hash = PasswordHash.recommended()
 
 
@@ -79,8 +80,6 @@ def is_authenticated(request: Request, db:Session):
         return user
     except InvalidTokenError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="You are unauthorised")
-
-
 
 
 def delete_user(id:int, db:Session):

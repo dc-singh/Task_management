@@ -8,5 +8,4 @@ class Settings(BaseSettings):
     ALGORITHM:str
     EXP_TIME:int
 
-    
 Settings = Settings()

@@ -20,8 +20,6 @@ def is_authenticated(request: Request, db:Session=Depends(get_db)):
     return controller.is_authenticated(request, db)
 
 
-
-
 @user_routes.delete("/delete/{id}",status_code=status.HTTP_204_NO_CONTENT)
 def delete_user(id:int, db:Session=Depends(get_db)):
     return controller.delete_user(id, db)
