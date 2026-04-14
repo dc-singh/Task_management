@@ -14,7 +14,7 @@ def create_task(body:TaskSchema, db = Depends(get_db), user: UserModel = Depends
 
 @task_routes.get("/all_tasks", status_code=status.HTTP_200_OK)
 def get_all_tasks(db = Depends(get_db),user: UserModel = Depends(is_authenticated)):
-    return controller.get_task(db)
+    return controller.get_task(db, user)
 
 @task_routes.get("/one_task/{task_id}", status_code=status.HTTP_200_OK)
 def get_one_task(task_id:int, db = Depends(get_db), user: UserModel = Depends(is_authenticated)):
@@ -23,8 +23,8 @@ def get_one_task(task_id:int, db = Depends(get_db), user: UserModel = Depends(is
 @task_routes.put("/update_task/{task_id}", status_code=status.HTTP_202_ACCEPTED)
 def update_task(task_id: int, body: TaskSchema, db = Depends(get_db), user: UserModel = Depends(is_authenticated)):
     # Pass path param first to match controller signature
-    return controller.update_task(task_id, body, db)
+    return controller.update_task(task_id, body, db,user)
 
 @task_routes.delete("/delete_task/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_task(task_id: int, db = Depends(get_db), user: UserModel = Depends(is_authenticated)):
-    return controller.delete_task(task_id, db)
+    return controller.delete_task(task_id, db, user)
