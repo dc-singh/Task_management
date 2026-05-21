@@ -4,13 +4,13 @@ from src.utils.settings import Settings
 import os
 import dotenv
 
-dotenv.load_dotenv()
+# dotenv.load_dotenv()
 
-DATABASE_URL = os.getenv("DB_CONNECTION", Settings.DB_CONNECTION)
+# DATABASE_URL = os.getenv("DB_CONNECTION", Settings.DB_CONNECTION)
 
 Base = declarative_base()
 
-engine = create_engine(url=DATABASE_URL)
+engine = create_engine(url=Settings.DB_CONNECTION)
 
 Session = sessionmaker(bind=engine)
 
