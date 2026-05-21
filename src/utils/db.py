@@ -2,6 +2,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from src.utils.settings import Settings
 import os
+import dotenv
+
+dotenv.load_dotenv()
 
 DATABASE_URL = os.getenv("DB_CONNECTION", Settings.DB_CONNECTION)
 
