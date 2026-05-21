@@ -9,8 +9,6 @@ engine = create_engine(url=Settings.DB_CONNECTION)
 Session = sessionmaker(bind=engine)
 
 
-
-
 def get_db():
     session = Session()
 

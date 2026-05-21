@@ -20,12 +20,36 @@ FastAPI service that lets you register users and manage tasks (create, read, upd
 
 ```
 task_management_app/
+├── alembic.ini            # Alembic database migration configuration
 ├── main.py                # FastAPI application entrypoint
+├── README.md              # Project documentation
 ├── requirements.txt       # Python dependencies
+├── migrations/            # Database migration scripts (Alembic)
+│   ├── env.py
+│   ├── README
+│   ├── script.py.mako
+│   └── versions/
+│       └── d3171ea6a561_add_user_id_to_tasks.py
 ├── src/
-│   ├── tasks/             # Task domain (router, controller, models, dtos)
-│   ├── users/             # User domain (router, controller, models, dtos)
-│   └── utils/             # DB setup and settings loader
+│   ├── __init__.py
+│   ├── tasks/             # Task domain
+│   │   ├── __init__.py
+│   │   ├── controller.py  # Task business logic
+│   │   ├── dtos.py        # Data transfer objects
+│   │   ├── models.py      # SQLAlchemy models
+│   │   └── router.py      # FastAPI routes
+│   ├── users/             # User domain
+│   │   ├── __init__.py
+│   │   ├── controller.py  # User business logic
+│   │   ├── dtos.py        # Data transfer objects
+│   │   ├── models.py      # SQLAlchemy models
+│   │   └── router.py      # FastAPI routes
+│   └── utils/             # Utilities and configuration
+│       ├── __init__.py
+│       ├── constant.py    # Application constants
+│       ├── db.py          # Database connection setup
+│       ├── helper.py      # Helper functions (JWT authentication)
+│       └── settings.py    # Environment settings loader
 └── .env                   # Local environment variables (not committed)
 ```
 
