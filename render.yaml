@@ -1,0 +1,25 @@
+# Exported from Render on 2026-06-07T17:40:59Z
+version: "1"
+projects:
+- name: Task Management API
+  environments:
+  - name: Production
+    services:
+    - type: web
+      name: Task_management
+      runtime: python
+      repo: https://github.com/dc-singh/Task_management
+      plan: free
+      envVars:
+      - key: EXP_TIME
+        sync: false
+      - key: ALGORITHM
+        sync: false
+      - key: SECRET_KEY
+        sync: false
+      - key: DB_CONNECTION
+        sync: false
+      region: oregon
+      buildCommand: pip install -r requirements.txt
+      startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+      autoDeployTrigger: commit
