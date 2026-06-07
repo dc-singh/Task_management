@@ -20,7 +20,7 @@ def is_authenticated(request: Request, db:Session = Depends(get_db)):
         exp_time = data.get("exp")
         curr_time = datetime.now().timestamp()
 
-        if curr_time > exp_time:
+        if curr_time > exp_time: #type: ignore
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail = "You are unauthorised")
         
         user = db.query(UserModel).filter(UserModel.id == user_id).first()
