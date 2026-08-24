@@ -1,0 +1,218 @@
+[
+  {
+    "id": "1787545889390n4h3mmo4qyd",
+    "name": "New Request 8/24/2026, 10:01:29 AM",
+    "createdAt": 1787545889390,
+    "baseRequest": {
+      "id": "17875458893892bgq",
+      "name": "New Request",
+      "method": "POST",
+      "url": "localhost:8000/user/login",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json",
+          "enabled": true
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"username\": \"nakul12\",\n  \"password\": \"nakul12\"\n}"
+      },
+      "auth": {
+        "type": "none"
+      },
+      "inheritAuth": true
+    },
+    "records": [
+      {
+        "id": "1787545892060iobn42zpdlc",
+        "timestamp": 1787545892060,
+        "request": {
+          "id": "17875458893892bgq",
+          "name": "New Request",
+          "method": "POST",
+          "url": "localhost:8000/user/login",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"username\": \"nakul12\",\n  \"password\": \"nakul12\"\n}"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 0,
+          "statusText": "Error",
+          "headers": {},
+          "body": "Request failed: fetch failed",
+          "time": 5,
+          "size": 0,
+          "actualRequest": {
+            "method": "POST",
+            "url": "localhost:8000/user/login",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": "{\n  \"username\": \"nakul12\",\n  \"password\": \"nakul12\"\n}",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787545913650t4hz0loyn",
+        "timestamp": 1787545913650,
+        "request": {
+          "id": "17875458893892bgq",
+          "name": "New Request",
+          "method": "POST",
+          "url": "localhost:8000/user/login",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"username\": \"nakul12\",\n  \"password\": \"nakul12\"\n}"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 0,
+          "statusText": "Error",
+          "headers": {},
+          "body": "Request failed: fetch failed",
+          "time": 2,
+          "size": 0,
+          "actualRequest": {
+            "method": "POST",
+            "url": "localhost:8000/user/login",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": "{\n  \"username\": \"nakul12\",\n  \"password\": \"nakul12\"\n}",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "17875459146148arbeh54afj",
+        "timestamp": 1787545914614,
+        "request": {
+          "id": "17875458893892bgq",
+          "name": "New Request",
+          "method": "POST",
+          "url": "localhost:8000/user/login",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"username\": \"nakul12\",\n  \"password\": \"nakul12\"\n}"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 0,
+          "statusText": "Error",
+          "headers": {},
+          "body": "Request failed: fetch failed",
+          "time": 3,
+          "size": 0,
+          "actualRequest": {
+            "method": "POST",
+            "url": "localhost:8000/user/login",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": "{\n  \"username\": \"nakul12\",\n  \"password\": \"nakul12\"\n}",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      }
+    ],
+    "responseContracts": [
+      {
+        "status": 0,
+        "latestVariantId": "1787545894127yo2fe0aoyn",
+        "variants": [
+          {
+            "id": "1787545894127yo2fe0aoyn",
+            "signature": "unknown:text",
+            "summary": "unknown text",
+            "sampleBody": "Request failed: fetch failed",
+            "contentType": "",
+            "firstSeen": 1787545892060,
+            "lastSeen": 1787545914614,
+            "occurrences": 3,
+            "history": [
+              {
+                "timestamp": 1787545892060,
+                "recordId": "1787545892060iobn42zpdlc"
+              },
+              {
+                "timestamp": 1787545913650,
+                "recordId": "1787545913650t4hz0loyn"
+              },
+              {
+                "timestamp": 1787545914614,
+                "recordId": "17875459146148arbeh54afj"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

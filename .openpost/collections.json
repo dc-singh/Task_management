@@ -1,0 +1,37 @@
+[
+  {
+    "id": "1787545889389",
+    "name": "Default",
+    "folders": [],
+    "requests": [
+      {
+        "id": "17875458893892bgq",
+        "name": "New Request",
+        "method": "POST",
+        "url": "localhost:8000/user/login",
+        "params": [],
+        "headers": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "enabled": true
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "type": "json",
+          "raw": "{\n  \"username\": \"nakul12\",\n  \"password\": \"nakul12\"\n}"
+        },
+        "auth": {
+          "type": "none"
+        },
+        "inheritAuth": true
+      }
+    ],
+    "variables": []
+  }
+]
