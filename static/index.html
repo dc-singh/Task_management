@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskSphere &bull; Next-Gen Task Management</title>
+  <meta name="description" content="Supercharge your workflow with TaskSphere — a futuristic, real-time task management application with Kanban & List views.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Design System Stylesheet -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Ambient Glowing Background Orbs -->
+  <div class="ambient-glow top-left"></div>
+  <div class="ambient-glow top-right"></div>
+  <div class="ambient-glow bottom-center"></div>
+
+  <!-- Main Application Wrapper -->
+  <div class="app-container">
+
+    <!-- Top Navigation Bar -->
+    <header class="header-nav">
+      <a class="brand-logo" href="#" id="brandLogo">
+        <div class="brand-icon-wrapper">
+          <i class="fa-solid fa-layer-group"></i>
+        </div>
+        <div class="brand-info">
+          <h1>Task<span class="gradient-text">Sphere</span></h1>
+          <p>Next-Gen Productivity</p>
+        </div>
+      </a>
+
+      <!-- Search Bar (Active when logged in) -->
+      <div class="header-search" id="headerSearchBox" style="display: none;">
+        <input type="text" id="searchInput" placeholder="Search tasks by title or details..." autocomplete="off">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+
+      <!-- Header Action Controls -->
+      <div class="header-actions">
+        <!-- Theme Toggle (Dark / Light) -->
+        <button class="btn-icon-pill" id="themeToggleBtn" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">
+          <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
+
+        <!-- Swagger Docs Quick Link -->
+        <a href="/docs" target="_blank" class="btn-icon-pill" title="View OpenAPI / Swagger Documentation" style="text-decoration: none;">
+          <i class="fa-solid fa-code"></i>
+        </a>
+
+        <!-- User Profile Pill (Visible when logged in) -->
+        <div class="user-menu-wrapper" id="userMenuWrapper" style="display: none;">
+          <button class="user-profile-btn" id="userProfileBtn">
+            <div class="user-avatar" id="navUserAvatar">U</div>
+            <span class="user-name-text" id="navUserName">User</span>
+            <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; color: var(--text-muted);"></i>
+          </button>
+
+          <!-- User Dropdown Menu -->
+          <div class="user-dropdown-menu" id="userDropdownMenu">
+            <div class="dropdown-user-header">
+              <strong id="dropdownFullName">User Name</strong>
+              <p id="dropdownEmail">user@example.com</p>
+            </div>
+            <button class="dropdown-item" id="menuViewProfile">
+              <i class="fa-regular fa-id-badge"></i> Account Profile
+            </button>
+            <button class="dropdown-item" id="menuSwaggerDocs" onclick="window.open('/docs', '_blank')">
+              <i class="fa-solid fa-book-bookmark"></i> API Documentation
+            </button>
+            <hr style="border: 0; border-top: 1px solid var(--border-subtle); margin: 0.25rem 0;">
+            <button class="dropdown-item danger" id="menuLogout">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ====================================================================
+         SECTION 1: AUTHENTICATION (Sign In / Register Hero)
+         ==================================================================== -->
+    <main id="authSection" class="auth-wrapper">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="auth-badge">
+            <i class="fa-solid fa-shield-halved"></i> Fast & Secure Auth
+          </div>
+          <h2>Welcome to <span class="gradient-text">TaskSphere</span></h2>
+          <p id="authSubtitle">Log in to organize, track, and complete your tasks</p>
+        </div>
+
+        <!-- Auth Mode Switcher -->
+        <div class="auth-tabs">
+          <button class="auth-tab-btn active" id="tabLoginBtn" type="button">Sign In</button>
+          <button class="auth-tab-btn" id="tabRegisterBtn" type="button">Create Account</button>
+        </div>
+
+        <!-- Login Form -->
+        <form class="auth-form" id="loginForm">
+          <div class="form-group">
+            <label for="loginUsername">Username</label>
+            <div class="input-container">
+              <input type="text" id="loginUsername" placeholder="Enter your username" required autocomplete="username">
+              <i class="fa-solid fa-user input-icon"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <div class="input-container">
+              <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <button type="button" class="password-toggle-btn" data-target="loginPassword">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary-aurora" style="width: 100%; justify-content: center; margin-top: 0.5rem;" id="loginSubmitBtn">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In to Workspace
+          </button>
+        </form>
+
+        <!-- Register Form -->
+        <form class="auth-form" id="registerForm" style="display: none;">
+          <div class="form-group">
+            <label for="regName">Full Name</label>
+            <div class="input-container">
+              <input type="text" id="regName" placeholder="e.g. Alex Morgan" required autocomplete="name">
+              <i class="fa-solid fa-signature input-icon"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regEmail">Email Address</label>
+            <div class="input-container">
+              <input type="email" id="regEmail" placeholder="alex@example.com" required autocomplete="email">
+              <i class="fa-solid fa-envelope input-icon"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regUsername">Username</label>
+            <div class="input-container">
+              <input type="text" id="regUsername" placeholder="Choose a username" required autocomplete="username">
+              <i class="fa-solid fa-at input-icon"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regPassword">Password</label>
+            <div class="input-container">
+              <input type="password" id="regPassword" placeholder="Create a strong password" required autocomplete="new-password">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <button type="button" class="password-toggle-btn" data-target="regPassword">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary-aurora" style="width: 100%; justify-content: center; margin-top: 0.5rem;" id="registerSubmitBtn">
+            <i class="fa-solid fa-user-plus"></i> Create My Account
+          </button>
+        </form>
+
+        <!-- Quick Demo Fill -->
+        <div class="demo-login-box">
+          <p>Want to test immediately? Auto-fill a demo account:</p>
+          <button type="button" class="btn-demo" id="btnAutoDemo">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Quick Fill Demo Account
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- ====================================================================
+         SECTION 2: MAIN DASHBOARD & TASK WORKSPACE
+         ==================================================================== -->
+    <main id="dashboardSection" style="display: none;">
+      
+      <!-- Greeting & Overview Hero -->
+      <section class="dashboard-hero">
+        <div class="welcome-row">
+          <div class="welcome-title">
+            <h2><span id="greetingTimeText">Welcome</span>, <span class="gradient-text-aurora" id="userDisplayName">Explorer</span> 👋</h2>
+            <p id="workspaceSubtitle">Here is your daily task breakdown and productivity metrics.</p>
+          </div>
+
+          <button class="btn-primary-aurora" id="btnOpenCreateTask">
+            <i class="fa-solid fa-plus"></i> New Task
+          </button>
+        </div>
+
+        <!-- 4 Real-time Metric Cards -->
+        <div class="stats-grid">
+          <!-- Total Tasks -->
+          <div class="stat-card stat-total">
+            <div class="stat-info">
+              <span class="stat-label">Total Tasks</span>
+              <span class="stat-value" id="statTotalCount">0</span>
+              <span class="stat-subtext">All active items</span>
+            </div>
+            <div class="stat-icon-wrapper">
+              <i class="fa-solid fa-list-check"></i>
+            </div>
+          </div>
+
+          <!-- Pending Tasks -->
+          <div class="stat-card stat-pending">
+            <div class="stat-info">
+              <span class="stat-label">In Progress</span>
+              <span class="stat-value" id="statPendingCount">0</span>
+              <span class="stat-subtext">Needs attention</span>
+            </div>
+            <div class="stat-icon-wrapper">
+              <i class="fa-solid fa-hourglass-half"></i>
+            </div>
+          </div>
+
+          <!-- Completed Tasks -->
+          <div class="stat-card stat-completed">
+            <div class="stat-info">
+              <span class="stat-label">Completed</span>
+              <span class="stat-value" id="statCompletedCount">0</span>
+              <span class="stat-subtext">Accomplished</span>
+            </div>
+            <div class="stat-icon-wrapper">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+          </div>
+
+          <!-- Completion Rate with Animated SVG Ring -->
+          <div class="stat-card stat-rate">
+            <div class="stat-info">
+              <span class="stat-label">Completion</span>
+              <span class="stat-value" id="statRatePercent">0%</span>
+              <span class="stat-subtext" id="statRateSubtitle">Let's get started!</span>
+            </div>
+            <div class="progress-ring-container">
+              <svg class="progress-ring-svg">
+                <circle class="progress-ring-circle-bg" stroke-width="4" fill="transparent" r="22" cx="26" cy="26" />
+                <circle class="progress-ring-circle" id="progressRingCircle" stroke-width="4" fill="transparent" r="22" cx="26" cy="26" />
+              </svg>
+              <div class="progress-ring-text" id="progressRingText">0%</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Workspace Controls: Filters, Views, Sort -->
+      <section class="workspace-controls">
+        <!-- Filter Tabs -->
+        <div class="filter-pills-group">
+          <button class="filter-pill active" data-filter="all">
+            <i class="fa-solid fa-globe"></i> All Tasks <span class="pill-count" id="pillAllCount">0</span>
+          </button>
+          <button class="filter-pill" data-filter="pending">
+            <i class="fa-solid fa-clock"></i> In Progress <span class="pill-count" id="pillPendingCount">0</span>
+          </button>
+          <button class="filter-pill" data-filter="completed">
+            <i class="fa-solid fa-check"></i> Completed <span class="pill-count" id="pillCompletedCount">0</span>
+          </button>
+        </div>
+
+        <!-- View Switchers & Actions -->
+        <div class="view-and-sort-group">
+          <div class="view-switcher">
+            <button class="view-btn active" id="viewKanbanBtn" title="Kanban Board View">
+              <i class="fa-solid fa-table-columns"></i> Board
+            </button>
+            <button class="view-btn" id="viewListBtn" title="Dense List View">
+              <i class="fa-solid fa-bars"></i> List
+            </button>
+          </div>
+
+          <button class="btn-icon-pill" id="btnRefreshTasks" title="Refresh Tasks from Server">
+            <i class="fa-solid fa-rotate-right"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- VIEW A: KANBAN BOARD -->
+      <section class="kanban-board" id="kanbanViewContainer">
+        <!-- Column 1: In Progress / To Do -->
+        <div class="kanban-column" id="kanbanColPending">
+          <div class="column-header">
+            <div class="column-title-wrapper">
+              <div class="column-indicator pending"></div>
+              <h3>In Progress / To Do</h3>
+            </div>
+            <span class="column-badge pending" id="colBadgePending">0 tasks</span>
+          </div>
+
+          <div class="tasks-stack" id="stackPending">
+            <!-- Dynamic task cards inserted here -->
+          </div>
+        </div>
+
+        <!-- Column 2: Completed -->
+        <div class="kanban-column" id="kanbanColCompleted">
+          <div class="column-header">
+            <div class="column-title-wrapper">
+              <div class="column-indicator completed"></div>
+              <h3>Completed</h3>
+            </div>
+            <span class="column-badge completed" id="colBadgeCompleted">0 tasks</span>
+          </div>
+
+          <div class="tasks-stack" id="stackCompleted">
+            <!-- Dynamic task cards inserted here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW B: DENSE LIST VIEW -->
+      <section class="list-view-container" id="listViewContainer" style="display: none;">
+        <div class="list-table-header">
+          <span class="col-status">Done</span>
+          <span class="col-id">ID</span>
+          <span class="col-title">Task Title</span>
+          <span class="col-desc">Description</span>
+          <span class="col-state">Status</span>
+          <span class="col-actions" style="text-align: right;">Actions</span>
+        </div>
+
+        <div class="list-task-stack" id="listTaskStack">
+          <!-- Dynamic task rows inserted here -->
+        </div>
+      </section>
+
+      <!-- Empty State / No Tasks Banner -->
+      <div class="empty-tasks-placeholder" id="emptyStatePlaceholder" style="display: none;">
+        <i class="fa-solid fa-clipboard-list"></i>
+        <h3>No Tasks Found</h3>
+        <p id="emptyStateMsg">You have no tasks matching the current view or filter.</p>
+        <button class="btn-primary-aurora" id="btnEmptyCreateTask">
+          <i class="fa-solid fa-plus"></i> Create First Task
+        </button>
+      </div>
+    </main>
+
+  </div><!-- /app-container -->
+
+  <!-- ====================================================================
+       MODAL 1: CREATE / EDIT TASK MODAL
+       ==================================================================== -->
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="taskModalTitle"><i class="fa-solid fa-plus-circle gradient-text"></i> Create New Task</h3>
+        <button class="modal-close-btn" id="closeTaskModalBtn">&times;</button>
+      </div>
+
+      <form id="taskForm">
+        <div class="modal-body">
+          <input type="hidden" id="taskEditId">
+
+          <div class="form-group">
+            <label for="taskTitleInput">Task Title *</label>
+            <div class="input-container">
+              <input type="text" id="taskTitleInput" placeholder="e.g. Finalize quarterly report" required maxlength="120">
+              <i class="fa-solid fa-heading input-icon"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="taskDescInput">Task Description</label>
+            <div class="input-container">
+              <textarea id="taskDescInput" rows="4" placeholder="Provide details, deliverables, or sub-tasks..." style="resize: vertical;"></textarea>
+              <i class="fa-solid fa-align-left input-icon" style="top: 1.2rem; transform: none;"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Task Status</label>
+            <label class="toggle-switch-wrapper">
+              <span style="font-size: 0.9rem; font-weight: 500;">Mark as Completed</span>
+              <input type="checkbox" id="taskCompletedToggle" class="toggle-input">
+              <span class="toggle-switch"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="cancelTaskModalBtn">Cancel</button>
+          <button type="submit" class="btn-primary-aurora" id="saveTaskBtn">
+            <i class="fa-solid fa-check"></i> Save Task
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 2: DELETE CONFIRMATION DIALOG
+       ==================================================================== -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal-box" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 style="color: var(--accent-rose);"><i class="fa-solid fa-triangle-exclamation"></i> Confirm Delete</h3>
+        <button class="modal-close-btn" id="closeDeleteModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="deleteModalMessage" style="font-size: 0.95rem; color: var(--text-secondary);">
+          Are you sure you want to permanently delete this task? This action cannot be undone.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="cancelDeleteBtn">Cancel</button>
+        <button type="button" class="btn-danger" id="confirmDeleteBtn">
+          <i class="fa-solid fa-trash"></i> Yes, Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 3: USER PROFILE & ACCOUNT MANAGEMENT
+       ==================================================================== -->
+  <div class="modal-overlay" id="profileModal">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3><i class="fa-regular fa-circle-user gradient-text"></i> User Account Details</h3>
+        <button class="modal-close-btn" id="closeProfileModalBtn">&times;</button>
+      </div>
+      <div class="modal-body" style="gap: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 1.25rem; padding: 1rem; background: var(--bg-surface); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+          <div class="user-avatar" id="modalUserAvatar" style="width: 58px; height: 58px; font-size: 1.5rem;">U</div>
+          <div>
+            <h4 id="modalFullName" style="font-size: 1.15rem;">User Name</h4>
+            <p id="modalUsername" style="color: var(--primary-light); font-size: 0.85rem; font-weight: 600;">@username</p>
+            <p id="modalEmail" style="color: var(--text-muted); font-size: 0.82rem;">user@example.com</p>
+          </div>
+        </div>
+
+        <div style="padding: 1rem; background: rgba(244, 63, 94, 0.08); border: 1px dashed rgba(244, 63, 94, 0.3); border-radius: var(--radius-md);">
+          <h4 style="color: var(--accent-rose); font-size: 0.95rem; margin-bottom: 0.35rem;">Danger Zone</h4>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.85rem;">
+            Permanently delete your account and all associated tasks from the database.
+          </p>
+          <button type="button" class="btn-danger" id="btnDeleteAccountTrigger" style="width: 100%; justify-content: center; font-size: 0.82rem;">
+            <i class="fa-solid fa-user-xmark"></i> Delete My Account
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="closeProfileBtn2">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       FLOATING TOAST NOTIFICATION STACK
+       ==================================================================== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
